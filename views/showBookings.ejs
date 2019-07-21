@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!-- <script type="text/javascript" src="booking.js"></script> -->
+  <title>Responsive Table</title>
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+  <!-- <link rel="stylesheet" href="/css/style1.css" type="text/css" media="all"> -->
+
+      <link href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz:200,300,400,700" rel="stylesheet">
+      <link href="//fonts.googleapis.com/css?family=Text+Me+One" rel="stylesheet">
+      <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+      <link rel="stylesheet" href="css/insert_tour.css">
+       <script src="../lib/jquery-1.10.2.min.js"></script>
+        <script src="../lib/underscore-1.5.2.min.js"></script>
+        <script src="../src/jquery.scrollTableBody-1.0.0.js"></script>
+
+  
+</head>
+
+<body>
+  <div class="overlay"></div>
+
+  <div id="throbber" style="display:none; min-height:120px;"></div>
+  <div id="noty-holder"></div>
+  <div id="wrapper">
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <h1 class="webname">TRAVEL</h1>
+        </div>
+        <ul class="nav navbar-right top-nav">
+            <li><a href="#" data-placement="bottom" data-toggle="tooltip" href="#" data-original-title="Stats"><i class="fa fa-bar-chart-o"></i>
+                </a>
+            </li>            
+            <li class="dropdown admin">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin User <b class="fa fa-angle-down "></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/logout"><i class="fa fa-fw fa-power-off"></i> Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+     
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav side-nav">
+                <li>
+                    <a href="/adminPage">WELCOME PAGE</a>
+                </li>
+                <li>
+                    <a href="/tour_list">TOUR LIST</a>
+                </li>
+                <li>
+                    <a href="/addTour">ADD TOUR</a>
+                </li>
+                <li>
+                    <a href="/showBookings">BOOKINGS</a>
+                </li>
+                <li>
+                    <a href="/genSettings">GENERAL SETTINGS</a>
+                </li>
+                 <li>
+                  <a href="/addReport">REPORT</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="space"></div>
+<div class="container">
+            <div class="overlay2" id="overlay2"></div>
+            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search by Booking Id.." title="Type in a name">           
+
+            <div id="TAB2" class="table-users TAB">
+                <div class="header">ALL BOOKINGS</div>
+                     <table cellspacing="0" >
+                       <tr>
+                          <td colspan="5">
+                            <div id="myTable">
+                            <table  id="bookingTable">
+                     <tr>
+                         <th style="background-color: #b9d3ee">BOOKING ID</th>
+                         <th style="background-color: #b9d3ee">CUST NAME</th>
+                         <th style="background-color: #b9d3ee">TOUR NAME </th>
+                         <th style="background-color: #b9d3ee">START DATE</th> 
+                         <th style="background-color: #b9d3ee">ADDRESS 1</th>
+                         <th style="background-color: #b9d3ee">ADDRESS 2</th>
+                         <th style="background-color: #b9d3ee">TOWN</th>
+                         <th style="background-color: #b9d3ee">STATUS</th>
+                         <th style="background-color: #b9d3ee">EDIT</th>
+                      </tr>
+                               
+                           
+                               <% for(var i=0;i<bookings.length;i++){ %>
+                              <tr>
+                                  <td><%= bookings[i].BOOKING_ID %></td>
+                                  <td><%= bookings[i].USERNAME %></td>
+                                  <td><%= bookings[i].TOUR_NAME %></td>
+                                  <td><%= bookings[i].START_DATE.substring(0,10) %></td>
+                                  <td><%= bookings[i].ADDRESS_LINE1%></td>
+                                  <td><%= bookings[i].ADDRESS_LINE2%></td>
+                                  <td><%= bookings[i].TOWN%></td>
+                                  <td><button class="showD" onclick="openPopup()">DETAILS</button></td>
+                                  <td><button class="edit">EDIT</button></td>
+                                  
+                                </tr>    
+                                <% } %>
+                                  </table>
+                          </div>
+                          </td>
+                          </tr>
+                      </tbody>
+                      </table>
+                </div>
+          </div>
+          <div class="details-popup" id="popup">
+              <div class="titleB">
+                 <div class="booking_details"><strong><i class="fa fa-shopping-cart"></i> BOOKING DETAILS </strong><span class="cancel" onclick="closePopup()"><i class="fa fa-times-circle" aria-hidden="true" style="color: red;font-size:30px; text-align: center;"></i></span></div>
+              </div>
+              <div class="details">
+               <span style="font-size: 30px;">Booking ID: <span id="B_Id"></span></span><br /><br />
+               <span style="color:blue;">TOUR NAME: </span><span id="t_name"></span><br /><br />
+                <ul class="w3-ul w3-small " style="list-style: none">
+                  <li> <span style="font-weight: bold;">Tour Id:</span><span id="t_id" style="text-align: center;"></span></li>
+                  <li> <span style="font-weight: bold;">Client Name:</span><span id="client" style="text-align: center;"></span></li>
+                  <li> <span style="font-weight: bold;">Start Date:</span><span id="sd" style="text-align: center;"></span></li>
+                  <li> <span style="font-weight: bold;">Duration:</span><span id="duration" style="text-align: center;"></span></li>
+                  <li> <span style="font-weight: bold;">Transport:</span><span id="tt" style="text-align: center;"></span></li>
+                </ul>
+                </div>
+          </div>
+
+          <div class="form2-popup" id="editform">
+            <form action="/updateBooking" method="post" class="form2-container">
+              <div class="row form-group">
+                <div class="col-md-12 box">
+                  <label for="bookingid">BOOKING ID</label>
+                  <br>
+                  <input type="text" id="bookingid" name="bookingid" class="form-control" value="">
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-12 box">
+                  <label for="username">CLIENT NAME</label>
+                  <input type="text" id="username" name="username" class="form-control" value="">
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-12 box">
+                  <label for="address1">ADDRESS1</label>
+                  <input type="text" id="address1" name="address1" class="form-control" value="">
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-12 box">
+                  <label for="address1">ADDRESS2</label>
+                  <input type="text" id="address2" name="address2" class="form-control" value="">
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-12 box">
+                  <label for="town">TOWN</label>
+                  <input type="text" id="town" name="town" class="form-control" value="">
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <button type="submit" class="btn" >Save</button>
+                   <button type="button" class="btn" onclick="closeForm()">Cancel</button>
+                </div>
+              </div>
+            </form> 
+            </div>
+            
+</div>
+      
+      </div>
+      <script type="text/javascript">
+
+             var booking;
+
+             function openPopup(bookings) {
+               document.getElementById("popup").style.display = "block";
+               document.getElementById("TAB2").style.display = "none";
+               document.getElementById("myInput").style.display = "none";
+               
+             }
+
+          booking =<%- JSON.stringify(bookings)%>
+          console.log(booking);
+         var booking_id,tName;
+         var b_id=document.getElementById('B_Id');
+         var t_n=document.getElementById('t_name');
+         var t_id=document.getElementById('t_id');
+         var client=document.getElementById('client');
+         var sd=document.getElementById('sd');
+         var duration=document.getElementById('duration');
+         var tt=document.getElementById('tt');
+
+         var table = document.getElementById('bookingTable');
+                
+                for(var i = 1; i < table.rows.length; i++)
+                {
+                    table.rows[i].onclick = function()
+                    {
+                        
+                        booking_id=this.cells[0].innerHTML;
+                                            
+                        for(var i=0;i<booking.length;i++){ 
+                                if(booking[i].BOOKING_ID==booking_id){
+                                         b_id.innerHTML=booking_id;  
+                                         t_n.innerHTML=booking[i].TOUR_NAME;
+                                         t_id.innerHTML=booking[i].TOUR_ID;
+                                         client.innerHTML=booking[i].USERNAME;
+                                         sd.innerHTML=booking[i].START_DATE.substring(0,10);
+                                         duration.innerHTML=booking[i].DURATION;
+                                         tt.innerHTML=booking[i].TRANSPORT_TYPE;
+                                }
+                             
+                       }
+                                            
+                    };
+                }
+         
+          
+      
+
+          function closePopup() {
+            document.getElementById("popup").style.display = "none";
+            document.getElementById("TAB2").style.display = "block";
+            document.getElementById("myInput").style.display = "block";
+
+
+          }
+
+            function myFunction() {
+              var input, filter, table, tr, td, i, txtValue;
+              input = document.getElementById("myInput");
+              filter = input.value.toUpperCase();
+              table = document.getElementById("myTable");
+              tr = table.getElementsByTagName("tr");
+              for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                  txtValue = td.textContent || td.innerText;
+                  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                  } else {
+                    tr[i].style.display = "none";
+                  }
+                }       
+              }
+            }
+
+            $(document).ready(function(){
+              $('.edit').click(func);
+              function func(){
+                var $row = $(this).closest("tr"),     
+                $tds = $row.find("td:nth-child(1)");
+                $.each($tds, function() {               
+                 $val= ($(this).text());         
+               });
+                document.getElementById("bookingid").value = $val;
+                $("#bookingid").attr('readonly','readonly');
+                $tds = $row.find("td:nth-child(2)");
+                $.each($tds, function() {               
+                 $val= ($(this).text());         
+               });
+                document.getElementById("username").value = $val;
+                $("#username").attr('readonly','readonly');
+
+                $tds = $row.find("td:nth-child(5)");
+                $.each($tds, function() {               
+                 $val= ($(this).text());         
+               });
+              
+                document.getElementById("address1").value = $val;
+                $tds = $row.find("td:nth-child(6)");
+                $.each($tds, function() {               
+                 $val= ($(this).text());         
+               });
+                document.getElementById("address2").value = $val;
+                $tds = $row.find("td:nth-child(7)");
+                $.each($tds, function() {               
+                 $val= ($(this).text());         
+               });
+                document.getElementById("town").value = $val;
+                $tds = $row.find("td:nth-child(8)");
+                $.each($tds, function() {               
+                 $val= ($(this).text());         
+               });
+                $("#editform").css("display","block");
+                $(".overlay2").css("display","block");
+              }
+            })
+
+            function closeForm() {
+              document.getElementById("editform").style.display = "none";
+             document.getElementById("overlay2").style.display = "none";
+
+            }
+
+      </script>
+</body>
+
+</html>

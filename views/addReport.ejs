@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <!-- <script type="text/javascript" src="booking.js"></script> -->
+  <title>Responsive Table</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+  <link href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz:200,300,400,700" rel="stylesheet">
+  <link href="//fonts.googleapis.com/css?family=Text+Me+One" rel="stylesheet">
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+  <link rel="stylesheet" href="css/insert_tour.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+
+        <script type="text/javascript" src="/html2canvas.js"></script>
+
+
+<script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
+  
+
+  
+</head>
+
+<body>
+
+
+
+  <div id="throbber" style="display:none; min-height:120px;"></div>
+  <div id="noty-holder"></div>
+  <div id="wrapper">
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <h1 class="webname">TRAVEL</h1>
+        
+      </div>
+      <ul class="nav navbar-right top-nav">
+        <li><a href="#" data-placement="bottom" data-toggle="tooltip" href="#" data-original-title="Stats"><i class="fa fa-bar-chart-o"></i>
+        </a>
+      </li>            
+      <li class="dropdown admin">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin User <b class="fa fa-angle-down "></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#"><i class="fa fa-fw fa-power-off"></i> Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <ul class="nav navbar-nav side-nav">
+        <li>
+          <a href="/adminPage">WELCOME PAGE</a>
+        </li>
+        <li>
+          <a href="/tour_list">TOUR LIST</a>
+        </li>
+        <li>
+          <a href="/addTour">ADD TOUR</a>
+        </li>
+        <li>
+          <a href="/showBookings">BOOKINGS</a>
+        </li>
+        <li>
+          <a href="/genSettings">GENERAL SETTINGS</a>
+        </li>
+        <li>
+          <a href="/addReport">REPORT</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="space"></div>
+
+   <div class="print">
+       <button type="button" class="btn" id="btn" >Print</button>
+   </div>
+  <div class="container2" id="container2">
+     
+    <div class="value2">
+      <h2 style="text-align: center;color: #1bbc98;font-family: sans-serif;font-size: 22px;"> <%= admin[0].WEBSITE %></h2>
+      <div style="height: 1px;background-color: gray"></div>
+      <h3 style="color: #2e8b57;text-align: right;margin-right: 5px;margin-top: 10px;"><i class="fa fa-phone" ></i><span></span><%= admin[0].CONTACT %></h3>
+      <h4 style="text-align: right;margin-right: 5px;"><i class="fa fa-envelope-o" ></i><span></span><%= admin[0].EMAIL %></h4>
+      <h5 style="text-align: right;margin-right: 5px;"><%= admin[0].ADDRESS %></span></h5>
+      <div class="row">
+        <!-- ============================================================== -->
+
+        <!-- ============================================================== -->
+
+        <!-- recent orders  -->
+        <!-- ============================================================== -->
+        <div class="col-xl-9 col-lg-12 col-md-6 col-sm-12 col-12">
+          <div class="card">
+            <h5 class="card-header">RECENT BOOKINGS IN ONE WEEK</h5>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead class="bg-light">
+                    <tr class="border-0">
+                      <th class="border-0">Booking ID</th>
+                      <th class="border-0">Tour ID</th>
+                      <th class="border-0">Client Name</th>
+                      <th class="border-0">Book Date</th>
+                      <th class="border-0">Book Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                   <% for(var i=0;i<book.length;i++){ %>
+                   <tr>
+                    <td><%= book[i].BOOKING_ID %></td>
+                    <td><%= book[i].TOUR_ID %></td>
+                    <td><%= book[i].USERNAME %></td>
+                    <td><%= book[i].BOOK_DATE.substring(0,10) %></td>
+                    <td><%= book[i].BOOK_DATE.substring(11,19) %></td>
+                  </tr>    
+                  <% } %> 
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="row flags">
+        <!-- ============================================================== -->
+        <!-- sales  -->
+        <!-- ============================================================== -->
+        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+          <div class="card border-3 border-top border-top-primary">
+            <div class="card-body cardd">
+              <h5 class="text-muted head" >Users</h5>
+              <div class="metric-value d-inline-block">
+                <h1 class="mb-1 value"><%= users.length %></h1>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- end sales  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- new customer  -->
+        <!-- ============================================================== -->
+        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+          <div class="card border-3 border-top border-top-primary">
+            <div class="card-body cardd" >
+              <h5 class="text-muted head">Tours</h5>
+              <div class="metric-value d-inline-block">
+                <h1 class="mb-1 value"><%= tour.length %></h1>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+          <div class="card border-3 border-top border-top-primary">
+            <div class="card-body cardd">
+              <h5 class="text-muted head">Total Bookings</h5>
+              <div class="metric-value d-inline-block">
+                <h1 class="mb-1 value"><%= bookings.length %></h1>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- end total orders  -->
+        <!-- ============================================================== -->
+      </div>
+    </div>
+  </div>
+ 
+   <div id="editor"></div>
+
+  <script type="text/javascript">
+
+     $('#btn').click(function () {
+               var img;
+               html2canvas(document.querySelector("#container2")).then(canvas => {
+
+                  // document.body.appendChild(canvas);
+                 img=canvas.toDataURL("image/png",1.0);
+                 //or whatever you want to execute
+                 var doc = new jsPDF("p", "mm", "a4",true);
+                var height = doc.internal.pageSize.getHeight();
+               doc.addImage(img,'png',10,2,180,height-200,'','medium');
+               doc.save('Report.pdf'); 
+              });
+               
+               });
+
+
+
+
+</script>
+</body>
+
+</html>
